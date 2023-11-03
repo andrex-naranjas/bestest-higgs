@@ -4,7 +4,7 @@
            T. Cisneros-Perez
 ---------------------------------------------------------------
 """
-from feyncalc.feyncalc_wrapper import loopint
+from feyncalc.loopint_wrapper import loopint
 import numpy as np
 
 
@@ -18,9 +18,13 @@ class LoopIntegral:
         self.m_loopint = loopint(workpath)
 
         
-    def loop_integral_value(self, baryons, k_prim, massA, SA_val, L_val, JA_val, SL_val, ModEx_val, bootstrap=False, gamma_val=None, m1=0, m2=0, m3=0):
+    def loop_integral_value(self):
         """
         Method that calls the wrapper and sums the individual decay widths
         """
         loop_value = self.m_loopint.loop_integral()
+        return loop_value
 
+
+integral = LoopIntegral()
+value_integral = integral.loop_integral_value()

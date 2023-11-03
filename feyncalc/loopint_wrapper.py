@@ -21,7 +21,7 @@ class loopint(object):
         Method to convert the python variables to c++ objects
         """
         # test = ctypes.c_double(MA_val)
-        m_lib = ctypes.CDLL(os.path.join(self.workpath+"/LoopIntegral", 'libloopintegral.so'))
+        m_lib = ctypes.CDLL(os.path.join(self.workpath+"/LoopIntegrals", 'libloopintegral.so'))
         m_lib.loopint_execute.restype = ctypes.c_double
         m_lib.loopint_execute.argtypes = [ctypes.c_double]
         loop_int_value = m_lib.loopint_execute()
