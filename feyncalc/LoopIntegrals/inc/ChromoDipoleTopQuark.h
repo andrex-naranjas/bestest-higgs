@@ -7,11 +7,25 @@
 
 class ChromoDipoleTopQuark{
 
-  public:
+public:
   ChromoDipoleTopQuark();
   virtual ~ChromoDipoleTopQuark();
   virtual double execute();
 
+private:
+  double pi_val = 3.1415926536;
+
+  // Integral functions
+  virtual double MagneticDipole();
+
+};
+
+//to talk to python
+extern "C"{
+  double loopint_execute(){
+    ChromoDipoleTopQuark* m_loopint = new ChromoDipoleTopQuark();
+    return m_loopint->execute();
+  }
 }
 
 
