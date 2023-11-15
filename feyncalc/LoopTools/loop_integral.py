@@ -4,7 +4,7 @@
            T. Cisneros-Perez
 ---------------------------------------------------------------
 """
-from feyncalc.loopint_wrapper import loopint
+from feyncalc.LoopTools.loopint_wrapper import loopint
 import numpy as np
 
 

@@ -27,7 +27,7 @@ class loopint(object):
     """
     def __init__(self, workpath="."):
         self.workpath = os.path.dirname(os.path.realpath(__file__))
-        self.m_lib = ctypes.CDLL(os.path.join(self.workpath+"/LoopTools", "liblooptools.so"))
+        self.m_lib = ctypes.CDLL(os.path.join(self.workpath, "liblooptools.so"))
         self.m_lib.ltini_()
         
         
