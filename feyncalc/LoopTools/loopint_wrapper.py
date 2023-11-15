@@ -10,7 +10,7 @@ from ctypes import (CDLL, POINTER, ARRAY, c_void_p,
                     c_char_p, create_string_buffer, Structure)
 import os
 from numpy.ctypeslib import ndpointer
-from feyncalc import tlt_coeficients
+from feyncalc.LoopTools import tlt_coeficients
 
 
 class Complex(Structure):
