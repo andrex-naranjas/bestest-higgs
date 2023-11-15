@@ -29,7 +29,7 @@ def main(arg1):
     os.system("make")
     os.chdir("..")
     print("Building shared library...")
-    os.system("gfortran -shared -o looptools.so " + os.getcwd() + "/" + LTVERS + "/build/*.o")
+    os.system("gfortran -shared -o liblooptools.so " + os.getcwd() + "/" + LTVERS + "/build/*.o")
     print("Cleaning up directory...")
     os.system("rm -rf looptools.tar.gz")
     os.system("rm -rf " + LTVERS + "/")
