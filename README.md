@@ -23,10 +23,9 @@ To install the framework you need anaconda and git on a linux machine. In a term
    ```
    conda env update --file config.yml --prune
    ```
-4. Compile the decay widths C++ code (here we use C++11):
+4. Compile the LoopTools package (here we use gfortran):
   ```
-  cd ./feyncalc/LoopIntegrals
-  make obj
-  make
+  cd ./feyncalc/LoopTools
+  python3 compile_loop_tools.py
   cd ../..
   ```
