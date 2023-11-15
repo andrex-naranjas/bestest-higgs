@@ -8,7 +8,7 @@ from numpy.ctypeslib import ndpointer
 
 
 
-lib = ctypes.CDLL("./mylib.so")
+lib = ctypes.CDLL("./looptools.so")
 
 aa0=1
 aa00=4
