@@ -3,6 +3,8 @@
 #define CHROMODIPOLETOPQUARK_CXX
 
 #include "ChromoDipoleTopQuark.h"
+//#include "/home/andres/Downloads/LoopTools-2.16/LoopTools-2.16/x86_64-Linux/include/clooptools.h"
+#include "clooptools.h"
 
 #include <cmath>
 #include <iostream>
@@ -16,12 +18,14 @@ ChromoDipoleTopQuark::ChromoDipoleTopQuark()
 
 ChromoDipoleTopQuark::~ChromoDipoleTopQuark(){}
 
-double ChromoDipoleTopQuark::execute(){
-  std::cout<<"testing.."<<std::endl;
+double ChromoDipoleTopQuark::execute(double MZ){
 
+  std::cout<<"testing.."<<std::endl;
   double test = MagneticDipole();
   std::cout<<test<<std::endl;
-
+  ltini();
+  std::cout << B0(1000., 50., 80.) << std::endl;
+  ltexi();
 
   return 0.;
 }
@@ -38,8 +42,6 @@ double ChromoDipoleTopQuark::MagneticDipole(){
   double qq = 91*91;
   double mfi = 173;
   double ms = 125;
-
-  double pi_val = 3.14192;
 
   double C0 = 1;
 
@@ -60,7 +62,16 @@ double ChromoDipoleTopQuark::MagneticDipole(){
   double value7 = value7p * value7pp;
 
 
-  return 1.;
+  std::cout<<value1<<std::endl;
+  std::cout<<value2<<std::endl;
+  std::cout<<value3<<std::endl;
+  std::cout<<value4<<std::endl;
+  std::cout<<value5<<std::endl;
+  std::cout<<value6<<std::endl;
+  std::cout<<value7<<std::endl;
+
+    
+  return value2;
 }
 
 #endif

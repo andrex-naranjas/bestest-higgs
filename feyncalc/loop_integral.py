@@ -14,17 +14,18 @@ class LoopIntegral:
     The class calls the python wrapper and feeds the functions
     and masses. 
     """
-    def __init__(self, bootstrap=False, baryons='', workpath="."):
+    def __init__(self, workpath="."):
         self.m_loopint = loopint(workpath)
 
         
-    def loop_integral_value(self):
+    def loop_integral_value(self, MZ):
         """
         Method that calls the wrapper and sums the individual decay widths
         """
-        loop_value = self.m_loopint.loop_integral()
+        loop_value = self.m_loopint.loop_integral(MZ)
         return loop_value
 
 
+MZ = 91
 integral = LoopIntegral()
-value_integral = integral.loop_integral_value()
+value_integral = integral.loop_integral_value(MZ)
