@@ -1,0 +1,25 @@
+import os
+import urllib.request
+
+LTVERS="LoopTools-2.16"
+
+def main(arg1):
+    print("Fetching LoopTools...")
+    os.chdir(arg1)
+    url = "http://www.feynarts.de/looptools/" + LTVERS + ".tar.gz"
+    urllib.request.urlretrieve(url, "looptools.tar.gz")
+    os.system('tar xzvf looptools.tar.gz')
+    os.system("cp ./config/configure ./" + LTVERS + "/")
+    os.chdir(arg1 + LTVERS)
+    os.system('./configure CFLAGS="-fomit-frame-pointer -fPIC" FFLAGS="-fPIC -ff2c" CXXFLAGS="-fomit-frame-pointer -fPIC"')
+    os.system("make")
+    os.chdir("..")
+    print("Building shared library...")
+    os.system("gfortran -shared -o looptools.so " + os.getcwd() + "/" + LTVERS + "/build/*.o")
+    print("Cleaning up directory...")
+    os.system("rm -rf looptools.tar.gz")
+    os.system("rm -rf " + LTVERS + "/")
+    
+    
+if __name__ == "__main__":
+    main("./")
