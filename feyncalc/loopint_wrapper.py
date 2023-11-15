@@ -5,45 +5,37 @@
 ---------------------------------------------------------------
 """
 import ctypes
-from ctypes import CDLL
+from ctypes import (CDLL, POINTER, ARRAY, c_void_p,
+                    c_int, byref, c_double, c_char, c_float,
+                    c_char_p, create_string_buffer, Structure)
 import os
+from numpy.ctypeslib import ndpointer
 
+
+class Complex(Structure):
+    """
+    Type of object to store the results of the LoopTools functions
+    as complex numbers
+    """
+    _fields_ = [("real", c_double), ("imag", c_double)]
+    
 
 class loopint(object):
     """
-    Python wrapper for the LoopIntegral C++ shared library
+    Python wrapper for the LoopTools Fortran shared library
     """
     def __init__(self, workpath="."):
         self.workpath = os.path.dirname(os.path.realpath(__file__))
+        self.m_lib = ctypes.CDLL(os.path.join(self.workpath+"/LoopTools", 'liblooptools.so'))
+        self.m_lib.ltini_()
         
-    def loop_integral(self, MZ_val):
-        """
-        Method to convert the python variables to c++ objects
-        """
-        test = ctypes.c_double(MZ_val)
-        m_lib = ctypes.CDLL(os.path.join(self.workpath+"/LoopIntegrals", 'libloopintegral.so'))
-        m_lib.loopint_execute.restype = ctypes.c_double
-        m_lib.loopint_execute.argtypes = [ctypes.c_double]
-        loop_int_value = m_lib.loopint_execute(test)
         
-        return loop_int_value
-
-
-class fortran_looptools(object):
-    """
-    Python wrapper for the LoopIntegral C++ shared library
-    """
-    def __init__(self, workpath="."):
-        self.workpath = os.path.dirname(os.path.realpath(__file__))
-        
-    def loop_integral(self, MZ_val):
+    def C0(self, p1s, p2s, p3s, m1, m2, m3):
         """
-        Method to convert the python variables to c++ objects
+        Method to obtain C0 values
         """
-        test = ctypes.c_double(MZ_val)
-        m_lib = ctypes.CDLL(os.path.join(self.workpath+"/LoopIntegrals", 'libmy_fortran_code.so'))
-        # m_lib.loopint_execute.restype = ctypes.c_double
-        # m_lib.loopint_execute.argtypes = [ctypes.c_double]
-        # loop_int_value = m_lib.loopint_execute(test)
-        
-        return loop_int_value
+        m_lib = self.m_lib
+        m_lib.c0_.restype = Complex
+        valC = m_lib.c0_(byref(c_double(p1s)), byref(c_double(p2s)), byref(c_double(p3s)),
+                         byref(c_double(m1)), byref(c_double(m2)), byref(c_double(m3)))
+        return complex(valC.real, valC.imag)

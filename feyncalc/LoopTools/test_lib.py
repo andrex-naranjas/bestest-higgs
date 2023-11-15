@@ -247,3 +247,6 @@ valC = lib.c0_(byref(c_double(p1s)), byref(c_double(p2s)), byref(c_double(p3s)),
 valB = lib.b0_(byref(c_double(p1s)), byref(c_double(p2s)), byref(c_double(p3s)))
 print(valB.real, valB.imag, "C0 real e imaginario")
 print(valC.real, valC.imag, "B0 real e imaginario")
+
+
+

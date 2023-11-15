@@ -18,14 +18,22 @@ class LoopIntegral:
         self.m_loopint = loopint(workpath)
 
         
-    def loop_integral_value(self, MZ):
+    def C0(self, p1s, p2s, p3s, m1, m2, m3):
         """
         Method that calls the wrapper and sums the individual decay widths
         """
-        loop_value = self.m_loopint.loop_integral(MZ)
+        loop_value = self.m_loopint.C0(p1s, p2s, p3s, m1, m2, m3)
         return loop_value
 
 
-MZ = 91
+p1s = 10
+p2s = 2
+p3s = 2
+m1 = 2
+m2 = 2
+m3 = 2
 integral = LoopIntegral()
-value_integral = integral.loop_integral_value(MZ)
+
+for _ in range(10000):
+    value_integral = integral.C0(p1s, p2s, p3s, m1, m2, m3)
+    print(value_integral)
