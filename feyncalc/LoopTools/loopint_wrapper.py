@@ -10,6 +10,7 @@ from ctypes import (CDLL, POINTER, ARRAY, c_void_p,
                     c_char_p, create_string_buffer, Structure)
 import os
 from numpy.ctypeslib import ndpointer
+from feyncalc import tlt_coeficients
 
 
 class Complex(Structure):
@@ -26,7 +27,7 @@ class loopint(object):
     """
     def __init__(self, workpath="."):
         self.workpath = os.path.dirname(os.path.realpath(__file__))
-        self.m_lib = ctypes.CDLL(os.path.join(self.workpath+"/LoopTools", 'liblooptools.so'))
+        self.m_lib = ctypes.CDLL(os.path.join(self.workpath+"/LoopTools", "liblooptools.so"))
         self.m_lib.ltini_()
         
         
