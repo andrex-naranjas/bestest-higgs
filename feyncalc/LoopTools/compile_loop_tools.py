@@ -3,7 +3,7 @@
 """
 ----------------------------------------------------------------
  Authors: A. Ramirez-Morales (andres.ramirez.morales@cern.ch)
-          T. Cisneros
+          T. Cisneros-Perez
 ---------------------------------------------------------------
 """
 import os
