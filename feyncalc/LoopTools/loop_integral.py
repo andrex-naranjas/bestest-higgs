@@ -18,9 +18,25 @@ class LoopIntegral:
         self.m_loopint = loopint(workpath)
 
         
+    def A0(self, p1s):
+        """
+        Method that calls the wrapper LoopTools A0
+        """
+        loop_value = self.m_loopint.A0(p1s)
+        return loop_value
+
+
+    def B0(self, p1s, p2s, p3s):
+        """
+        Method that calls the wrapper LoopTools B0
+        """
+        loop_value = self.m_loopint.B0(p1s, p2s, p3s)
+        return loop_value
+    
+
     def C0(self, p1s, p2s, p3s, m1, m2, m3):
         """
-        Method that calls the wrapper and sums the individual decay widths
+        Method that calls the wrapper  LoopTools C0
         """
         loop_value = self.m_loopint.C0(p1s, p2s, p3s, m1, m2, m3)
         return loop_value
@@ -35,5 +51,9 @@ m3 = 2
 integral = LoopIntegral()
 
 for _ in range(100000):
+    value_integral = integral.A0(p1s)
+    print(value_integral,  "   A0")
+    value_integral = integral.B0(p1s, p2s, m1)
+    print(value_integral,  "   B0")
     value_integral = integral.C0(p1s, p2s, p3s, m1, m2, m3)
-    print(value_integral)
+    print(value_integral,  "   C0")

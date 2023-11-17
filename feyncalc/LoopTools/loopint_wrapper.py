@@ -29,6 +29,26 @@ class loopint(object):
         self.workpath = os.path.dirname(os.path.realpath(__file__))
         self.m_lib = ctypes.CDLL(os.path.join(self.workpath, "liblooptools.so"))
         self.m_lib.ltini_()
+
+        
+    def A0(self, x):
+        """
+        Method to obtain A0 values
+        """
+        m_lib = self.m_lib
+        m_lib.a0_.restype = Complex
+        valA = m_lib.a0_(byref(c_double(x)) )  #, c_int_p(c_int(0)))
+        return complex(valA.real, valA.imag)
+
+
+    def B0(self, ps, m1, m2):
+        """
+        Method to obtain B0 values
+        """
+        m_lib = self.m_lib
+        m_lib.b0_.restype = Complex
+        valB = m_lib.b0_(byref(c_double(ps)), byref(c_double(m1)), byref(c_double(m2)))
+        return complex(valB.real, valB.imag)
         
         
     def C0(self, p1s, p2s, p3s, m1, m2, m3):
@@ -40,3 +60,5 @@ class loopint(object):
         valC = m_lib.c0_(byref(c_double(p1s)), byref(c_double(p2s)), byref(c_double(p3s)),
                          byref(c_double(m1)), byref(c_double(m2)), byref(c_double(m3)))
         return complex(valC.real, valC.imag)
+
+
