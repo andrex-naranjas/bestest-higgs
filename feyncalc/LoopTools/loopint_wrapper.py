@@ -25,10 +25,19 @@ class loopint(object):
     """
     Python wrapper for the LoopTools Fortran shared library
     """
-    def __init__(self, workpath="."):
+    def __init__(self, workpath=".", mu=1, delta=-1.):
         self.workpath = os.path.dirname(os.path.realpath(__file__))
         self.m_lib = ctypes.CDLL(os.path.join(self.workpath, "liblooptools.so"))
         self.m_lib.ltini_()
+        # set regularization parameters
+        self.m_lib.setmudim_(byref(c_double(pow(mu ,2))) ) # mu^2
+        self.m_lib.setdelta_(byref(c_double( delta )))     # delta
+        # self.m_lib.setlambda_(byref(c_double( 0 )))      # lambda
+        # self.m_lib.setminmass_(byref(c_double( 0 )))     # min mass
+        self.m_lib.getmudim_.restype = c_double
+        self.m_lib.getdelta_.restype = c_double
+        print("\mu is %lf"  %self.m_lib.getmudim_())
+        print("\Delta is %lf " %self.m_lib.getdelta_())
 
         
     def A0(self, x):
