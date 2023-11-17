@@ -34,6 +34,6 @@ m2 = 2
 m3 = 2
 integral = LoopIntegral()
 
-for _ in range(10000):
+for _ in range(100000):
     value_integral = integral.C0(p1s, p2s, p3s, m1, m2, m3)
     print(value_integral)
