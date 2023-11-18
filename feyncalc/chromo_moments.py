@@ -18,66 +18,74 @@ class ChromoMomentsEM:
         self.m_loopint = LoopIntegral(workpath)
 
 
-    def set_A0_values(self, p1s):
+    def get_A0_value(self, p1s):
         """
-        Method to set A0 values
+        Method to set A0 value
         """
-        self.m_A0 = self.m_loopint.A0(p1s)
+        return self.m_loopint.A0(p1s)
 
 
-    def set_B0_values(self, p1s, p2s, p3s):
+    def get_B0_value(self, p1s, p2s, p3s):
         """
-        Method to set B0 values
+        Method to set B0 value
         """
-        self.m_B0 = self.m_loopint.B0(p1s, p2s, p3s)
+        return self.m_loopint.B0(p1s, p2s, p3s)
         
 
-    def set_C0_values(self, p1s, p2s, p3s, m1, m2, m3):
+    def get_C0_value(self, p1s, p2s, p3s, m1, m2, m3):
         """
-        Method to set C0 values
+        Method to set C0 value
         """
-        self.m_C0 = self.m_loopint.C0(p1s, p2s, p3s, m1, m2, m3)
+        return self.m_loopint.C0(p1s, p2s, p3s, m1, m2, m3)
         
 
-    def chromo_magnetic(mfi, qq, mfj, ms ):
+    def chromo_magnetic(self, mfi=10, qq=1, mfj=1, ms=1):
 
         Pi = 3.141592
         gs = 1
-        B01 = "xx"
-        B02 = "xx"
-        C01 = "xx"
-        A01 = "xx"
-        A01 = "xx"
+        B01 = self.get_B0_value(pow(mfi, 2), pow(mfj, 2), pow(ms, 2))
+        B02 = self.get_B0_value(qq, pow(mfj, 2), pow(mfj, 2))
+        C01 = self.get_C0_value(pow(mfi, 2), pow(mfi, 2), qq, pow(mfj, 2), pow(ms, 2), pow(mfj, 2))
+        A01 = self.get_A0_value(pow(mfj, 2))
+        A02 = self.get_A0_value(pow(ms, 2))
 
-        fm1 = (gs*(4*mfi^4 + 2*B01*mfi^4 - 2*B02*mfi^4 + 2*C01*mfi^6 + A01*(4*mfi^2 - qq) + B02*mfi^2*(6*mfj^2 - 6*ms^2 - qq) + 2*C01*mfi^4*(2*(mfj^2 + ms^2) - qq) - mfi^2*qq + B01*(mfj - ms)*(mfj + ms)*qq + A02*(-4*mfi^2 + qq) +  B01*mfi^2*(-10*mfj^2 + 10*ms^2 + qq) - 2*C01*mfi^2*(3*(mfj^2 - ms^2)^2 - (mfj^2 - 2*ms^2)*qq))*(P1*P2 - S1*S2))
+        P1 = -0.238605
+        P2 = 0.238605
+        S1 = 0.238605
+        S2 = 0.238605
 
+        ff=(gs*(4*pow(mfi, 4) + 2*B01*pow(mfi, 4) - 2*B02*pow(mfi, 4) + 2*C01*pow(mfi, 6) + A01*(4*pow(mfi, 2) - qq) + B02*pow(mfi, 2)*(6*pow(mfj, 2) - 6*pow(ms, 2) - qq) + \
+                2*C01*pow(mfi, 4)*(2*(pow(mfj, 2) + pow(ms, 2)) - qq) - pow(mfi, 2)*qq + B01*(mfj - ms)*(mfj + ms)*qq + A02*(-4*pow(mfi, 2) + qq) + \
+                B01*pow(mfi, 2)*(-10*pow(mfj, 2) + 10*pow(ms, 2) + qq) - 2*C01*pow(mfi, 2)*(3*pow((pow(mfj, 2) - pow(ms, 2)), 2) - (pow(mfj, 2) - 2*pow(ms, 2))*qq))*(P1*P2 - S1*S2))/ \
+        (16*mfi*pow(Pi, 2)*pow((-4*pow(mfi, 2) + qq), 2)) 
 
-
-
-        fm2 = (16*mfi*Pi^2*(-4*mfi^2 + qq)^2) + (gs*mfj*(B01 - B02 - C01*(mfi^2 - mfj^2 + ms^2))*(P1*P2 + S1*S2))/ (8*Pi^2*(4*mfi^2 - qq))
-
+        fff = (gs*mfj*(B01 - B02 - C01*(pow(mfi, 2) - pow(mfj, 2) + pow(ms, 2)))*(P1*P2 + S1*S2))/ (8*pow(Pi, 2)*(4*pow(mfi, 2) - qq))
+        fm = ff + fff
+        
+        return fm
 
         
-
-        fm = fm1 / fm2
-        
-
-
-
-        
-p1s = 10
-p2s = 2
-p3s = 2
-m1 = 2
-m2 = 2
-m3 = 2
-integral = LoopIntegral()
+magnetic = ChromoMomentsEM()
 input()
 
-for _ in range(100000):
-    value_integral = integral.A0(p1s)
-    print(value_integral,  "   A0")
-    value_integral = integral.B0(p1s, p2s, m1)
-    print(value_integral,  "   B0")
-    value_integral = integral.C0(p1s, p2s, p3s, m1, m2, m3)
-    print(value_integral,  "   C0")
+import time
+start = time.time()
+
+
+qq = pow(91, 2)
+mfi = 173
+ms = 125
+mfj = 283.35
+
+for _ in range(100):
+    c_magnetic = magnetic.chromo_magnetic(mfi=mfi, qq=qq, mfj=mfj, ms=ms)
+    print(c_magnetic)
+
+end = time.time()
+print(end - start)
+    # value_integral = integral.A0(p1s)
+    # print(value_integral,  "   A0")
+    # value_integral = integral.B0(p1s, p2s, m1)
+    # print(value_integral,  "   B0")
+    # value_integral = integral.C0(p1s, p2s, p3s, m1, m2, m3)
+    # print(value_integral,  "   C0")

@@ -69,5 +69,3 @@ class loopint(object):
         valC = m_lib.c0_(byref(c_double(p1s)), byref(c_double(p2s)), byref(c_double(p3s)),
                          byref(c_double(m1)), byref(c_double(m2)), byref(c_double(m3)))
         return complex(valC.real, valC.imag)
-
-
