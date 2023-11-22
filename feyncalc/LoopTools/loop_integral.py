@@ -17,6 +17,9 @@ class LoopIntegral:
     def __init__(self, workpath="."):
         self.m_loopint = loopint(workpath)
 
+    def show_errors(self):
+        self.m_loopint.show_errors()
+
         
     def A0(self, p1s):
         """

@@ -17,6 +17,10 @@ class ChromoMomentsEM:
     def __init__(self, workpath="."):
         self.m_loopint = LoopIntegral(workpath)
 
+        
+    def show_errors(self):
+        self.m_loopint.show_errors()
+
 
     def get_A0_value(self, p1s):
         """
@@ -41,14 +45,16 @@ class ChromoMomentsEM:
 
     def chromo_magnetic(self, mfi=10, qq=1, mfj=1, ms=1):
 
-        Pi = 3.141592
-        gs = 1
-        B01 = self.get_B0_value(pow(mfi, 2), pow(mfj, 2), pow(ms, 2))
-        B02 = self.get_B0_value(qq, pow(mfj, 2), pow(mfj, 2))
-        C01 = self.get_C0_value(pow(mfi, 2), pow(mfi, 2), qq, pow(mfj, 2), pow(ms, 2), pow(mfj, 2))
+        Pi = np.pi
+        gs = 0.1181 * 2 * pow(Pi, 0.5)
         A01 = self.get_A0_value(pow(mfj, 2))
         A02 = self.get_A0_value(pow(ms, 2))
+        B01 = self.get_B0_value(pow(mfi, 2), pow(mfj, 2), pow(ms, 2))
+        B02 = self.get_B0_value(qq, pow(mfj, 2), pow(mfj, 2))        
+        C01 = self.get_C0_value(pow(mfi, 2), pow(mfi, 2), qq, pow(mfj, 2), pow(ms, 2), pow(mfj, 2))
 
+        print(C01, "C01")
+        C01 = -0.0000106797
         P1 = -0.238605
         P2 = 0.238605
         S1 = 0.238605
@@ -62,7 +68,7 @@ class ChromoMomentsEM:
         fff = (gs*mfj*(B01 - B02 - C01*(pow(mfi, 2) - pow(mfj, 2) + pow(ms, 2)))*(P1*P2 + S1*S2))/ (8*pow(Pi, 2)*(4*pow(mfi, 2) - qq))
         fm = ff + fff
         
-        return fm
+        return (fm * mfi) / gs
 
         
 magnetic = ChromoMomentsEM()
@@ -75,7 +81,7 @@ start = time.time()
 qq = pow(91, 2)
 mfi = 173
 ms = 125
-mfj = 283.35
+mfj = 283.35689658565644
 
 for _ in range(100):
     c_magnetic = magnetic.chromo_magnetic(mfi=mfi, qq=qq, mfj=mfj, ms=ms)
@@ -83,9 +89,4 @@ for _ in range(100):
 
 end = time.time()
 print(end - start)
-    # value_integral = integral.A0(p1s)
-    # print(value_integral,  "   A0")
-    # value_integral = integral.B0(p1s, p2s, m1)
-    # print(value_integral,  "   B0")
-    # value_integral = integral.C0(p1s, p2s, p3s, m1, m2, m3)
-    # print(value_integral,  "   C0")
+magnetic.show_errors() # check for errors and warnings

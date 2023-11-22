@@ -25,7 +25,7 @@ class loopint(object):
     """
     Python wrapper for the LoopTools Fortran shared library
     """
-    def __init__(self, workpath=".", mu=1, delta=-1.):
+    def __init__(self, workpath=".", mu=1, delta=0):
         self.workpath = os.path.dirname(os.path.realpath(__file__))
         self.m_lib = ctypes.CDLL(os.path.join(self.workpath, "liblooptools.so"))
         self.m_lib.ltini_()
@@ -38,6 +38,13 @@ class loopint(object):
         self.m_lib.getdelta_.restype = c_double
         print("\mu is %lf"  %self.m_lib.getmudim_())
         print("\Delta is %lf " %self.m_lib.getdelta_())
+
+    def show_errors(self):
+        """
+        Method to show error messages from LoopTools
+
+        """
+        self.m_lib.ltexi_()
 
         
     def A0(self, x):
