@@ -287,4 +287,3 @@ def vector_vertex_value(expr_field, beta_value=1.35, alfa_value=np.pi/2, f_value
 L_vector = vector_lagrangian()
 vertex_expr = vector_vertex(L_vector, "Tbar", "WpM", "Bp")
 print(vector_vertex_value(vertex_expr))
-

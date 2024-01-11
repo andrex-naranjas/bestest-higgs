@@ -12,7 +12,8 @@ tbar, T6bar, T5bar, bbar, Tbar, Tb23bar, Bbar = symbols('tbar T6bar T5bar bbar T
 Tb53bar, u, d = symbols('Tb53bar u d')
 ubar, dbar, c, s, cbar, sbar = symbols('ubar dbar c s cbar sbar')
 pr, yb, yB, yd, ys, yu, yc = symbols('pr yb yB yd ys yu yc')
-
+g5 = symbols(' g5')
+pl = symbols('pl')
 
 def scalar_lagrangian():
     '''
@@ -245,8 +246,6 @@ def scalar_lagrangian():
     # Lagrangiano derecho
     Lr1 = L1r+L2r+L3r+L4r+L5r+L6r+L10r+L11r+L12r+L13r
 
-    pl = symbols('pl')
-
     # Left Lagrangians (partials)
     L1d = pl*y1*f*((Ucbar @ S) @ (SigmaPT @ S) @ Q)
     L2d = pl*y2*f*((Ucbar @ SigmaPT) @ Qp)
@@ -319,7 +318,7 @@ def scalar_vertex(lag, qbar, field, q): #, beta_value=0, alfa_value=np.pi/2,
                                      sig: value_field[3], HM: value_field[4], Hm: value_field[5],
                                      fi0: value_field[6], fiM: value_field[7], fim: value_field[8],
                                      eta0: value_field[9], etaM: value_field[10], etam: value_field[11],
-                                     GM: 0, Gm: 0, G0: 0})
+                                     GM: 0, Gm: 0, G0: 0, (1/f**2):0})
     # print(Lagrangiano_evaluado) # shows the lagrangian only with the contributions: qbar,field,q
     Lag_expan = expand(Lagrangiano_evaluado) # we need to expand at every step to avoid errors
     expr_q = collect(Lag_expan, q).coeff(q, 1)
@@ -332,9 +331,10 @@ def scalar_vertex(lag, qbar, field, q): #, beta_value=0, alfa_value=np.pi/2,
 
 
 def scalar_vertex_value(expr_field, beta_value=0, alfa_value=np.pi/2,
-                        f_value=1000, y1_value=0.9, y2_value=0.7, y3_value=0.33):
+                        f_value=1000, y1_value=0.9, y2_value=0.7, y3_value=0.33, g5_value="g5", pr_value="pr", pl_value="pl"):
     '''
     Method to obtain the numerical value of the vertex
     '''
-    vertex_value = expr_field.subs({beta: beta_value, alfa: alfa_value, f: f_value, y1: y1_value, y2: y2_value, y3: y3_value, sqrt(2): 1.41421})
+    vertex_value = expr_field.subs({beta: beta_value, alfa: alfa_value, f: f_value, y1: y1_value, y2: y2_value, y3: y3_value, sqrt(2): pow(2, 0.5),# g5:g5_value,
+                                    pr:pr_value, pl:pl_value})
     return vertex_value # return type=sympycore object
