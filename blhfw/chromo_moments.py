@@ -40,11 +40,12 @@ class ChromoMomentsEM:
         """
         return self.m_loopint.C0(p1s, p2s, p3s, m1, m2, m3)
         
-    def chromo_magnetic_scalar(self, mfi=10, qq=1, mfj=1, ms=1):
+    def chromo_magnetic_scalar(self, mfi=10, qq=1, mfj=1, ms=1, pp1=-0.238605, pp2=0.238605, ss1=0.238605, ss2=0.238605):
         """
         Method to calculate the magnetic dipole
         """
         Pi = np.pi
+        pi = np.pi
         gs = 0.1181 * 2 * pow(Pi, 0.5)
         A01 = self.get_A0_value(pow(mfj, 2))
         A02 = self.get_A0_value(pow(ms, 2))
@@ -54,10 +55,10 @@ class ChromoMomentsEM:
 
         #print(C01, "C01")
         C01 = -0.0000106797
-        P1 = -0.238605
-        P2 = 0.238605
-        S1 = 0.238605
-        S2 = 0.238605
+        P1 = pp1
+        P2 = pp2
+        S1 = ss1
+        S2 = ss2
 
         hmufi = (mfi/gs)*(gs*(4*mfi**4 + 2*B01*mfi**4 - 2*B02*mfi**4 + 2*C01*mfi**6 + A01*(4*mfi**2 - qq) + B02*mfi**2*(6*mfj**2 - 6*ms**2 - qq) + 2*C01*mfi**4*(2*(mfj**2 + ms**2) - qq) - mfi**2*qq + B01*(mfj - ms)*(mfj + ms)*qq + A02*(-4*mfi**2 + qq) + B01*mfi**2*(-10*mfj**2 + 10*ms**2 + qq) - 2*C01*mfi**2*(3*(mfj**2 - ms**2)**2 - (mfj**2 - 2*ms**2)*qq))*(P1*P2 - S1*S2))/(16*mfi*pi**2*(-4*mfi**2 + qq)**2) + (gs*mfj*(B01 - B02 - C01*(mfi**2 - mfj**2 + ms**2))*(P1*P2 + S1*S2))/(8*pi**2*(4*mfi**2 - qq))
         

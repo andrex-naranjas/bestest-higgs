@@ -10,6 +10,24 @@ import scalar_vertex as sv
 import masses_blh as mlh
 
 
+magnetic_electric = ChromoMomentsEM()
+qq  = pow(91, 2)
+mfi = 173
+ms  = 125
+mfj = 283.35689658565644
+
+
+c_magnetic_scalar = magnetic_electric.chromo_magnetic_scalar(mfi, qq, mfj, ms, pp1=1, pp2=1, ss1=1, ss2=1)
+print(c_magnetic_scalar, "prueba Tzihue")
+input()
+# c_electric_scalar = magnetic_electric.chromo_electric_scalar(mfi, qq, mfj, ms)
+# c_magnetic_vector = magnetic_electric.chromo_magnetic_vector(mfi, qq, mfj, ms)
+# c_electric_vector = magnetic_electric.chromo_electric_vector(mfi, qq, mfj, ms)
+# c_magnetic_photon = magnetic_electric.chromo_magnetic_photon(mfi, qq, mfj, ms)
+# c_electric_photon = magnetic_electric.chromo_electric_photon(mfi, qq, mfj, ms)
+
+
+
 tt = np.array(["t", "T", "T5", "T6", "Tb23", "Tb53", "Bp"])
 tb = np.array(["tbar", "Tbar", "T5bar", "T6bar", "Tb23bar", "Tb53bar", "Bbar"])
 camp = np.array(["A0", "H0", "h0", "sig", "HM", "Hm", "fi0", "fiM", "fim", "eta0", "etaM", "etam"])
@@ -22,23 +40,14 @@ L_scalar = sv.scalar_lagrangian()
 for i in range(camp.size):
     for j in range(tt.size):
         vertex_expr = sv.scalar_vertex(L_scalar, tb[j + 1], camp[i], tt[0])
-        print(sv.scalar_vertex_value(vertex_expr, beta_value=0.45, alfa_value=-2.161285356607978, f_value="f", y1_value=0.7, y2_value=0.9, y3_value=3.01008, g5_value="g5", pr_value=0.5, pl_value=-0.5))
+        #print(
+        sv.scalar_vertex_value(vertex_expr, beta_value=0.45, alfa_value=-2.161285356607978, f_value="f", y1_value=0.7, y2_value=0.9, y3_value=3.01008, g5_value="g5", pr_value=0.5, pl_value=-0.5)
+        # )
+        f = 1000+-10
         print(tb[j + 1], camp[i], tt[0])
 
 
 
-# magnetic_electric = ChromoMomentsEM()
-# qq  = pow(91, 2)
-# mfi = 173
-# ms  = 125
-# mfj = 283.35689658565644
-
-# # c_magnetic_scalar = magnetic_electric.chromo_magnetic_scalar(mfi, qq, mfj, ms)
-# # c_electric_scalar = magnetic_electric.chromo_electric_scalar(mfi, qq, mfj, ms)
-# # c_magnetic_vector = magnetic_electric.chromo_magnetic_vector(mfi, qq, mfj, ms)
-# # c_electric_vector = magnetic_electric.chromo_electric_vector(mfi, qq, mfj, ms)
-# # c_magnetic_photon = magnetic_electric.chromo_magnetic_photon(mfi, qq, mfj, ms)
-# c_electric_photon = magnetic_electric.chromo_electric_photon(mfi, qq, mfj, ms)
 
 
 # L_scalar = sv.scalar_lagrangian()

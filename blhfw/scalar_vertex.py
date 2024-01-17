@@ -318,7 +318,7 @@ def scalar_vertex(lag, qbar, field, q): #, beta_value=0, alfa_value=np.pi/2,
                                      sig: value_field[3], HM: value_field[4], Hm: value_field[5],
                                      fi0: value_field[6], fiM: value_field[7], fim: value_field[8],
                                      eta0: value_field[9], etaM: value_field[10], etam: value_field[11],
-                                     GM: 0, Gm: 0, G0: 0, (1/f**2):0})
+                                     GM: 0, Gm: 0, G0: 0})
     # print(Lagrangiano_evaluado) # shows the lagrangian only with the contributions: qbar,field,q
     Lag_expan = expand(Lagrangiano_evaluado) # we need to expand at every step to avoid errors
     expr_q = collect(Lag_expan, q).coeff(q, 1)
@@ -335,6 +335,16 @@ def scalar_vertex_value(expr_field, beta_value=0, alfa_value=np.pi/2,
     '''
     Method to obtain the numerical value of the vertex
     '''
-    vertex_value = expr_field.subs({beta: beta_value, alfa: alfa_value, f: f_value, y1: y1_value, y2: y2_value, y3: y3_value, sqrt(2): pow(2, 0.5),# g5:g5_value,
-                                    pr:pr_value, pl:pl_value})
+    vertex_value = expr_field.subs({beta: beta_value, alfa: alfa_value, f: f_value, y1: y1_value, y2: y2_value, y3: y3_value, sqrt(2):pow(2, 0.5),# g5:g5_value,
+                                    pr:(1+g5)/2, pl:(1-g5)/2})
+
+    pru1 = vertex_value
+    pru2 = expand(pru1)
+    P11 = collect(pru2, g5).coeff(g5, 1)
+    S11 = expand(pru2 - P11*g5)
+
+    print(P11, "pseudo test")
+    print(S11, "scalar test")
+
+    
     return vertex_value # return type=sympycore object
